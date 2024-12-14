@@ -1,7 +1,6 @@
 'use client'
 
 export default function ErrorComponent({
-  error,
   reset,
 }: {
   error: Error

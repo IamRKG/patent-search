@@ -1,16 +1,21 @@
+interface CacheItem<T> {
+  data: T;
+  timestamp: number;
+}
+
 const CACHE_DURATION = 3600; // 1 hour
 
 export class Cache {
-  private static cache = new Map<string, { data: any; timestamp: number }>();
+  private static cache = new Map<string, CacheItem<unknown>>();
 
-  static set(key: string, data: any) {
+  static set<T>(key: string, data: T): void {
     this.cache.set(key, {
       data,
       timestamp: Date.now()
     });
   }
 
-  static get(key: string) {
+  static get<T>(key: string): T | null {
     const item = this.cache.get(key);
     if (!item) return null;
     
@@ -19,6 +24,6 @@ export class Cache {
       return null;
     }
     
-    return item.data;
+    return item.data as T;
   }
 }
